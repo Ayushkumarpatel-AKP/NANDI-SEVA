@@ -12,6 +12,7 @@
 import {ai} from '@/ai/ai-instance';
 import {z} from 'genkit';
 import {suggestTreatment, SuggestTreatmentOutput} from "@/ai/flows/suggest-treatment-flow";
+import {generateConditionsAndTreatments, GenerateConditionsAndTreatmentsOutput} from "@/ai/flows/generate-conditions-and-treatments";
 
 const InitialAnalysisInputSchema = z.object({
   imageUrl: z.string().describe('The URL of the cow image.'),
@@ -24,7 +25,12 @@ const InitialAnalysisOutputSchema = z.object({
   breed: z.string().describe('The breed of the cow.'),
   color: z.string().describe('The color and markings of the cow.'),
   health: z.string().describe('Visible signs of illness or abnormalities in the cow.'),
-  treatmentSuggestions: z.string().optional().describe('AI suggested treatments for detected diseases.')
+  treatmentSuggestions: z.string().optional().describe('AI suggested treatments for detected diseases.'),
+  diseaseDetails: z.array(z.object({
+    diseaseName: z.string(),
+    medicineName: z.string(),
+    medicineLink: z.string()
+  })).optional().describe('List of suspected conditions and treatments for detected diseases.')
 });
 export type InitialAnalysisOutput = z.infer<typeof InitialAnalysisOutputSchema>;
 
@@ -67,10 +73,18 @@ async input => {
     try {
       const treatmentResult: SuggestTreatmentOutput = await suggestTreatment({ disease: output.health });
       output.treatmentSuggestions = treatmentResult.treatmentSuggestions;
+
+      // Generate conditions and treatments using the new flow
+      const conditionsAndTreatments: GenerateConditionsAndTreatmentsOutput = await generateConditionsAndTreatments({ disease: output.health });
+      output.diseaseDetails = conditionsAndTreatments;
+
     } catch (error) {
       console.error("Error suggesting treatment:", error);
       output.treatmentSuggestions = "Failed to retrieve treatment suggestions.";
+      output.diseaseDetails = [];
     }
+  } else {
+    output!.diseaseDetails = [];
   }
   return output!;
 });

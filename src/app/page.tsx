@@ -112,12 +112,14 @@ export default function Home() {
         setAnalysisResult(result);
 
         // Simulate identifying disease spots (replace with actual ML model output)
-        const simulatedDiseaseSpots = [
-          { x: 30, y: 25, diseaseName: "Ringworm" , medicineName: "Miconazole Cream", medicineLink: "https://www.example.com/ringworm-treatment" },
-          { x: 55, y: 60, diseaseName: "Lice Infestation" ,medicineName: "Permethrin Lotion",medicineLink: "https://www.example.com/lice-treatment" },
-          { x: 70, y: 40, diseaseName: "Skin Lesion" ,medicineName: "Silver Sulfadiazine",medicineLink: "https://www.example.com/skin-lesion-treatment" },
-        ];
-        setDiseaseSpots(simulatedDiseaseSpots);
+        // Remove the hardcoded disease spots
+        // const simulatedDiseaseSpots = [
+        //   { x: 30, y: 25, diseaseName: "Ringworm" , medicineName: "Miconazole Cream", medicineLink: "https://www.example.com/ringworm-treatment" },
+        //   { x: 55, y: 60, diseaseName: "Lice Infestation" ,medicineName: "Permethrin Lotion",medicineLink: "https://www.example.com/lice-treatment" },
+        //   { x: 70, y: 40, diseaseName: "Skin Lesion" ,medicineName: "Silver Sulfadiazine",medicineLink: "https://www.example.com/skin-lesion-treatment" },
+        // ];
+        // setDiseaseSpots(simulatedDiseaseSpots);
+        setDiseaseSpots([]); // Initialize to empty array
 
         console.log(result);
       } catch (error: any) {
@@ -254,7 +256,7 @@ export default function Home() {
                 </CardContent>
               </Card>
 
-              {analysisResult.cowPresent && diseaseSpots.length > 0 && (
+              {analysisResult.cowPresent && analysisResult.diseaseDetails && analysisResult.diseaseDetails.length > 0 && (
                 <Card className="w-full rounded-professional shadow-professional">
                     <CardHeader>
                       <CardTitle className="text-lg drop-shadow-professional">Suspected Conditions and Treatments</CardTitle>
@@ -271,7 +273,7 @@ export default function Home() {
                           </TableRow>
                         </TableHeader>
                         <TableBody>
-                          {diseaseSpots.map((spot, index) => (
+                          {analysisResult.diseaseDetails.map((spot, index) => (
                             <TableRow key={index}>
                               <TableCell className="font-medium text-xs">{spot.diseaseName}</TableCell>
                               <TableCell className="text-xs">{spot.medicineName}</TableCell>
