@@ -11,6 +11,7 @@
 
 import {ai} from '@/ai/ai-instance';
 import {z} from 'genkit';
+import {suggestTreatment, SuggestTreatmentOutput} from "@/ai/flows/suggest-treatment-flow";
 
 const InitialAnalysisInputSchema = z.object({
   imageUrl: z.string().describe('The URL of the cow image.'),
@@ -23,6 +24,7 @@ const InitialAnalysisOutputSchema = z.object({
   breed: z.string().describe('The breed of the cow.'),
   color: z.string().describe('The color and markings of the cow.'),
   health: z.string().describe('Visible signs of illness or abnormalities in the cow.'),
+  treatmentSuggestions: z.string().optional().describe('AI suggested treatments for detected diseases.')
 });
 export type InitialAnalysisOutput = z.infer<typeof InitialAnalysisOutputSchema>;
 
@@ -61,5 +63,14 @@ const initialAnalysisFlow = ai.defineFlow<
 },
 async input => {
   const {output} = await initialAnalysisPrompt(input);
+  if (output && output.cowPresent && output.health !== "No visible disease signs") {
+    try {
+      const treatmentResult: SuggestTreatmentOutput = await suggestTreatment({ disease: output.health });
+      output.treatmentSuggestions = treatmentResult.treatmentSuggestions;
+    } catch (error) {
+      console.error("Error suggesting treatment:", error);
+      output.treatmentSuggestions = "Failed to retrieve treatment suggestions.";
+    }
+  }
   return output!;
 });

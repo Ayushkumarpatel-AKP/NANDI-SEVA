@@ -298,6 +298,18 @@ export default function Home() {
                     </CardContent>
                   </Card>
 
+                   {analysisResult.treatmentSuggestions && (
+                    <Card className="w-full rounded-professional shadow-professional">
+                      <CardHeader>
+                        <CardTitle className="text-lg drop-shadow-professional">AI Treatment Suggestions</CardTitle>
+                        <CardDescription className="text-sm">AI-provided treatment suggestions for the suspected condition.</CardDescription>
+                      </CardHeader>
+                      <CardContent className="text-sm">
+                        <p>{analysisResult.treatmentSuggestions}</p>
+                      </CardContent>
+                    </Card>
+                  )}
+
                   <Card className="w-full rounded-professional shadow-professional">
                     <CardHeader>
                       <CardTitle className="text-lg drop-shadow-professional">Precautions and Recommendations</CardTitle>
