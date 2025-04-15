@@ -1,1 +1,2 @@
-// Flows will be imported for their side effects in this file.
+import '@/ai/flows/summarize-analysis-history.ts';
+import '@/ai/flows/initial-analysis-from-prompt.ts';
