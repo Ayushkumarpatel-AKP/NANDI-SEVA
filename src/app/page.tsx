@@ -104,9 +104,9 @@ export default function Home() {
 
         // Simulate identifying disease spots (replace with actual ML model output)
         const simulatedDiseaseSpots = [
-          { x: 30, y: 25, diseaseName: "Ringworm" },
-          { x: 55, y: 60, diseaseName: "Lice Infestation" },
-          { x: 70, y: 40, diseaseName: "Skin Lesion" },
+          { x: 30, y: 25, diseaseName: "Ringworm" , medicineLink: "https://www.example.com/ringworm-treatment" },
+          { x: 55, y: 60, diseaseName: "Lice Infestation" ,medicineLink: "https://www.example.com/lice-treatment" },
+          { x: 70, y: 40, diseaseName: "Skin Lesion" ,medicineLink: "https://www.example.com/skin-lesion-treatment" },
         ];
         setDiseaseSpots(simulatedDiseaseSpots);
 
@@ -192,6 +192,9 @@ export default function Home() {
                       }}
                     >
                       <span className="absolute top-full left-1/2 transform -translate-x-1/2 text-white text-xs">{spot.diseaseName}</span>
+                      <a href={spot.medicineLink} target="_blank" rel="noopener noreferrer" className="absolute bottom-full left-1/2 transform -translate-x-1/2 text-white text-xs bg-blue-500 p-1 rounded-md">
+                        Treatment
+                      </a>
                     </div>
                   ))}
                 </div>
