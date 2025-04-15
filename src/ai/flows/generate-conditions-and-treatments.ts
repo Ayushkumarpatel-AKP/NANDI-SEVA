@@ -39,16 +39,16 @@ const prompt = ai.definePrompt({
   output: {
     schema: z.array(TreatmentItemSchema).describe('Array of treatment items with disease name, medicine name, and medicine link.'),
   },
-  prompt: `You are an expert veterinarian AI assistant. Based on the detected disease of a cow, suggest a list of medicines and a link to find out more about the medicine.
+  prompt: `You are an expert veterinarian AI assistant. Based on the detected disease of a cow, suggest a list of medicines and a link to find out more about the medicine. Use emojis to make the text more visually appealing and engaging.
   Disease: {{{disease}}}
 
   Respond with a JSON array of objects like this:
   \`\`\`json
   [
     {
-      "diseaseName": "Disease name",
-      "medicineName": "Medicine name",
-      "medicineLink": "Link to medicine information"
+      "diseaseName": "Disease name 🐄",
+      "medicineName": "Medicine name 💊",
+      "medicineLink": "Link to medicine information 🔗"
     }
   ]
   \`\`\`
@@ -68,3 +68,4 @@ async input => {
   const {output} = await prompt(input);
   return output!;
 });
+
