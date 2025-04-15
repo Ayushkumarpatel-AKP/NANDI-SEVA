@@ -193,15 +193,22 @@ export default function Home() {
                     {diseaseSpots.map((spot, index) => (
                       <div
                         key={index}
-                        className="absolute rounded-full bg-red-500 bg-opacity-75"
+                        className="absolute flex items-center"
                         style={{
                           top: `${spot.y}%`,
                           left: `${spot.x}%`,
-                          width: '10px',
-                          height: '10px',
                           transform: 'translate(-50%, -50%)',
                         }}
-                      />
+                      >
+                        <div
+                          className="rounded-full bg-red-500 bg-opacity-75"
+                          style={{
+                            width: '10px',
+                            height: '10px',
+                          }}
+                        />
+                        <span className="ml-2 text-white text-xs">{spot.diseaseName}</span>
+                      </div>
                     ))}
                   </div>
                 </div>
