@@ -20,6 +20,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+// import {
+//   Chart,
+//   ChartBar,
+//   ChartBarSeries,
+//   ChartContainer,
+//   ChartLegend,
+//   ChartTooltip,
+//   ChartTooltipContent,
+// } from "@/components/ui/chart"
 
 export default function Home() {
   const [imageUrl, setImageUrl] = useState('');
@@ -135,15 +144,36 @@ export default function Home() {
     }, 2000); // Simulate scanning for 2 seconds
   };
 
+  // const chartData = [
+  //   { name: 'Jan', uv: 400, pv: 240, amt: 240 },
+  //   { name: 'Feb', uv: 300, pv: 139, amt: 221 },
+  //   { name: 'Mar', uv: 200, pv: 980, amt: 229 },
+  //   { name: 'Apr', uv: 278, pv: 390, amt: 200 },
+  //   { name: 'May', uv: 189, pv: 480, amt: 218 },
+  //   { name: 'Jun', uv: 239, pv: 380, amt: 250 },
+  //   { name: 'Jul', uv: 349, pv: 430, amt: 210 },
+  // ];
+
+  // const chartConfig = {
+  //   uv: {
+  //     label: 'Health Score',
+  //     color: 'hsl(var(--primary))',
+  //   },
+  //   pv: {
+  //     label: 'Another Metric',
+  //     color: 'hsl(var(--secondary))',
+  //   },
+  // };
+
   return (
     <div className="min-h-screen py-3 flex flex-col justify-center sm:py-6">
       <div className="relative py-1 sm:max-w-xl sm:mx-auto">
         <div className="absolute inset-0 bg-gradient-to-r from-green-300 to-green-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
         <div className="relative px-2 py-5 bg-green-100 shadow-lg rounded-3xl sm:p-10">
-          <h1 className="text-xl font-bold mb-4 text-gray-900 text-center shadow-professional">CowHealth AI</h1>
+          <h1 className="text-xl font-bold mb-4 text-gray-900 text-center shadow-professional">CowHealth AI 🐄</h1>
           <Card className="w-full rounded-professional shadow-professional">
             <CardHeader>
-              <CardTitle className="text-lg drop-shadow-professional">Image Analysis</CardTitle>
+              <CardTitle className="text-lg drop-shadow-professional">Image Analysis 📸</CardTitle>
               <CardDescription className="text-sm">Upload an image of a cow or use live camera to analyze its health.</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col space-y-2">
@@ -229,9 +259,30 @@ export default function Home() {
 
           {analysisResult && (
             <div className="mt-4 space-y-2">
+
+              {/* Health Graph */}
+              {/*<Card className="w-full rounded-professional shadow-professional">
+                <CardHeader>
+                  <CardTitle className="text-lg drop-shadow-professional">Health Graph 📈</CardTitle>
+                  <CardDescription className="text-sm">Visual representation of the cow's health over time.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ChartContainer config={chartConfig} className="h-[200px]">
+                    <Chart data={chartData}>
+                      <ChartBarSeries dataKey="uv" />
+                      {/*<ChartBarSeries dataKey="pv" /> Example of another data series *}
+                    </Chart>
+                    <ChartLegend />
+                    <ChartTooltip>
+                      <ChartTooltipContent />
+                    </ChartTooltip>
+                  </ChartContainer>
+                </CardContent>
+              </Card>*/}
+
               <Card className="w-full rounded-professional shadow-professional">
                 <CardHeader>
-                  <CardTitle className="text-lg drop-shadow-professional">Analysis Result</CardTitle>
+                  <CardTitle className="text-lg drop-shadow-professional">Analysis Result 🐄</CardTitle>
                   <CardDescription className="text-sm">Details of the cow analysis.</CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -259,7 +310,7 @@ export default function Home() {
               {analysisResult.cowPresent && analysisResult.diseaseDetails && analysisResult.diseaseDetails.length > 0 && (
                 <Card className="w-full rounded-professional shadow-professional">
                     <CardHeader>
-                      <CardTitle className="text-lg drop-shadow-professional">Suspected Conditions and Treatments</CardTitle>
+                      <CardTitle className="text-lg drop-shadow-professional">Suspected Conditions and Treatments 🛠️</CardTitle>
                       <CardDescription className="text-sm">Detailed information about the suspected conditions and possible treatments.</CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -292,7 +343,7 @@ export default function Home() {
                 <div className="flex flex-col gap-2">
                   <Card className="w-full rounded-professional shadow-professional">
                     <CardHeader>
-                      <CardTitle className="text-lg drop-shadow-professional">Suspected Conditions</CardTitle>
+                      <CardTitle className="text-lg drop-shadow-professional">Suspected Conditions ⚠️</CardTitle>
                       <CardDescription className="text-sm">Detailed information about the suspected conditions.</CardDescription>
                     </CardHeader>
                     <CardContent className="text-sm">
@@ -303,7 +354,7 @@ export default function Home() {
                    {analysisResult.treatmentSuggestions && (
                     <Card className="w-full rounded-professional shadow-professional">
                       <CardHeader>
-                        <CardTitle className="text-lg drop-shadow-professional">AI Treatment Suggestions</CardTitle>
+                        <CardTitle className="text-lg drop-shadow-professional">AI Treatment Suggestions 💡</CardTitle>
                         <CardDescription className="text-sm">AI-provided treatment suggestions for the suspected condition.</CardDescription>
                       </CardHeader>
                       <CardContent className="text-sm">
@@ -314,7 +365,7 @@ export default function Home() {
 
                   <Card className="w-full rounded-professional shadow-professional">
                     <CardHeader>
-                      <CardTitle className="text-lg drop-shadow-professional">Precautions and Recommendations</CardTitle>
+                      <CardTitle className="text-lg drop-shadow-professional">Precautions and Recommendations 📌</CardTitle>
                       <CardDescription className="text-sm">Steps to take for the cow's health.</CardDescription>
                     </CardHeader>
                     <CardContent className="text-sm">
