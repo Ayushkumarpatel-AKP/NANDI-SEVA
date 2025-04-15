@@ -10,6 +10,7 @@ import {initialAnalysis} from '@/ai/flows/initial-analysis-from-prompt';
 import {useToast} from '@/hooks/use-toast';
 import {Toaster} from "@/components/ui/toaster";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
+import {Loader2} from "lucide-react";
 
 export default function Home() {
   const [imageUrl, setImageUrl] = useState('');
@@ -19,6 +20,7 @@ export default function Home() {
   const {toast} = useToast();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
+  const [isCapturing, setIsCapturing] = useState(false);
 
   useEffect(() => {
     const getCameraPermission = async () => {
@@ -54,6 +56,22 @@ export default function Home() {
     }
   };
 
+  const handleCaptureImage = async () => {
+    setIsCapturing(true);
+    if (hasCameraPermission && videoRef.current) {
+      const canvas = document.createElement('canvas');
+      canvas.width = videoRef.current.videoWidth;
+      canvas.height = videoRef.current.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx?.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+      const capturedImage = canvas.toDataURL('image/jpeg');
+      setImageUrl(capturedImage);
+    }
+    setTimeout(() => {
+      setIsCapturing(false);
+    }, 1500);
+  };
+
   const handleAnalyzeImage = async () => {
     if (!imageUrl && !hasCameraPermission) {
       toast({
@@ -67,7 +85,7 @@ export default function Home() {
     setLoading(true);
     try {
       let imageToAnalyze = imageUrl;
-      if (hasCameraPermission && videoRef.current) {
+      if (hasCameraPermission && videoRef.current && !imageUrl) {
         // Capture a frame from the live camera feed as a data URL
         const canvas = document.createElement('canvas');
         canvas.width = videoRef.current.videoWidth;
@@ -94,9 +112,9 @@ export default function Home() {
   return (
     <div className="min-h-screen py-6 flex flex-col justify-center sm:py-12">
       <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div className="absolute inset-0 bg-gradient-to-r from-cowhealth-secondary to-cowhealth-accent shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-        <div className="relative px-4 py-10 bg-cowhealth-primary shadow-lg rounded-3xl sm:p-20">
-          <h1 className="text-2xl font-bold mb-8 text-cowhealth-text text-center shadow-professional">CowHealth AI</h1>
+        <div className="absolute inset-0 bg-gradient-to-r from-green-300 to-green-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+        <div className="relative px-4 py-10 bg-green-100 shadow-lg rounded-3xl sm:p-20">
+          <h1 className="text-2xl font-bold mb-8 text-gray-900 text-center shadow-professional">CowHealth AI</h1>
           <Card className="w-full rounded-professional shadow-professional">
             <CardHeader>
               <CardTitle className="drop-shadow-professional">Image Analysis</CardTitle>
@@ -110,7 +128,14 @@ export default function Home() {
                 className="mb-2"
               />
 
-              <video ref={videoRef} className="w-full aspect-video rounded-md" autoPlay muted />
+              <div className="relative">
+                <video ref={videoRef} className="w-full aspect-video rounded-md" autoPlay muted />
+                {isCapturing && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-md">
+                    <Loader2 className="animate-spin text-white h-12 w-12" />
+                  </div>
+                )}
+              </div>
 
               { !(hasCameraPermission) && (
                 <Alert variant="destructive">
@@ -119,8 +144,11 @@ export default function Home() {
                     Please allow camera access to use this feature.
                   </AlertDescription>
                 </Alert>
-              )
-              }
+              )}
+
+              <Button onClick={handleCaptureImage} disabled={loading || isCapturing} className="shadow-professional mb-2">
+                {isCapturing ? 'Capturing...' : 'Capture Image'}
+              </Button>
 
               {imageUrl && (
                 <div className="relative w-full h-64 mb-4 rounded-md overflow-hidden">
