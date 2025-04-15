@@ -100,7 +100,15 @@ export default function Home() {
                 <CardDescription>Details of the cow analysis.</CardDescription>
               </CardHeader>
               <CardContent>
-                <pre className="whitespace-pre-wrap">{JSON.stringify(analysisResult, null, 2)}</pre>
+                {analysisResult.cowPresent ? (
+                  <div className="space-y-2">
+                    <p><strong>Breed:</strong> {analysisResult.breed}</p>
+                    <p><strong>Color:</strong> {analysisResult.color}</p>
+                    <p><strong>Health:</strong> {analysisResult.health}</p>
+                  </div>
+                ) : (
+                  <p>No cow detected in the image.</p>
+                )}
               </CardContent>
             </Card>
           )}
