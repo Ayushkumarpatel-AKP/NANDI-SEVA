@@ -180,21 +180,24 @@ export default function Home() {
                     </div>
                   )}
                   {diseaseSpots.map((spot, index) => (
-                    <div
-                      key={index}
-                      className="absolute rounded-full bg-red-500 bg-opacity-75"
-                      style={{
-                        top: `${spot.y}%`,
-                        left: `${spot.x}%`,
-                        width: '10px',
-                        height: '10px',
-                        transform: 'translate(-50%, -50%)',
-                      }}
-                    >
-                      <span className="absolute top-full left-1/2 transform -translate-x-1/2 text-white text-xs">{spot.diseaseName}</span>
-                      <a href={spot.medicineLink} target="_blank" rel="noopener noreferrer" className="absolute bottom-full left-1/2 transform -translate-x-1/2 text-white text-xs bg-blue-500 p-1 rounded-md">
-                        Treatment
-                      </a>
+                    <div key={index} className="relative">
+                      <div
+                        className="absolute rounded-full bg-red-500 bg-opacity-75"
+                        style={{
+                          top: `${spot.y}%`,
+                          left: `${spot.x}%`,
+                          width: '10px',
+                          height: '10px',
+                          transform: 'translate(-50%, -50%)',
+                        }}
+                      >
+                        <span className="absolute top-full left-1/2 transform -translate-x-1/2 text-white text-xs">{spot.diseaseName}</span>
+                      </div>
+                      <div className="mt-2 text-center">
+                        <a href={spot.medicineLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                          Treatment Information
+                        </a>
+                      </div>
                     </div>
                   ))}
                 </div>
