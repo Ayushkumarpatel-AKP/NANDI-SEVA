@@ -134,29 +134,29 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen py-6 flex flex-col justify-center sm:py-12">
-      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+    <div className="min-h-screen py-3 flex flex-col justify-center sm:py-6">
+      <div className="relative py-1 sm:max-w-xl sm:mx-auto">
         <div className="absolute inset-0 bg-gradient-to-r from-green-300 to-green-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-        <div className="relative px-4 py-10 bg-green-100 shadow-lg rounded-3xl sm:p-20">
-          <h1 className="text-2xl font-bold mb-8 text-gray-900 text-center shadow-professional">CowHealth AI</h1>
+        <div className="relative px-2 py-5 bg-green-100 shadow-lg rounded-3xl sm:p-10">
+          <h1 className="text-xl font-bold mb-4 text-gray-900 text-center shadow-professional">CowHealth AI</h1>
           <Card className="w-full rounded-professional shadow-professional">
             <CardHeader>
-              <CardTitle className="drop-shadow-professional">Image Analysis</CardTitle>
-              <CardDescription>Upload an image of a cow or use live camera to analyze its health.</CardDescription>
+              <CardTitle className="text-lg drop-shadow-professional">Image Analysis</CardTitle>
+              <CardDescription className="text-sm">Upload an image of a cow or use live camera to analyze its health.</CardDescription>
             </CardHeader>
-            <CardContent className="flex flex-col space-y-4">
+            <CardContent className="flex flex-col space-y-2">
               <Input
                 type="file"
                 accept="image/*"
                 onChange={handleImageUpload}
-                className="mb-2"
+                className="mb-1"
               />
 
               <div className="relative">
                 <video ref={videoRef} className="w-full aspect-video rounded-md" autoPlay muted />
                 {isCapturing && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-md">
-                    <Loader2 className="animate-spin text-white h-12 w-12" />
+                    <Loader2 className="animate-spin text-white h-8 w-8" />
                   </div>
                 )}
               </div>
@@ -170,12 +170,12 @@ export default function Home() {
                 </Alert>
               )}
 
-              <Button onClick={handleCaptureImage} disabled={loading || isCapturing} className="shadow-professional mb-2">
+              <Button onClick={handleCaptureImage} disabled={loading || isCapturing} className="shadow-professional mb-1 text-sm">
                 {isCapturing ? 'Capturing...' : 'Capture Image'}
               </Button>
 
               {imageUrl && (
-                <div className="relative w-full h-64 mb-4 rounded-md overflow-hidden">
+                <div className="relative w-full h-48 mb-2 rounded-md overflow-hidden">
                   <Image
                     src={imageUrl}
                     alt="Uploaded Cow"
@@ -185,7 +185,7 @@ export default function Home() {
                   />
                   {scanning && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-md">
-                      <Loader2 className="animate-spin text-white h-12 w-12" />
+                      <Loader2 className="animate-spin text-white h-8 w-8" />
                     </div>
                   )}
                   {/* Disease Spots */}
@@ -203,11 +203,11 @@ export default function Home() {
                         <div
                           className="rounded-full bg-red-500 bg-opacity-75"
                           style={{
-                            width: '10px',
-                            height: '10px',
+                            width: '8px',
+                            height: '8px',
                           }}
                         />
-                        <span className="ml-2 text-white text-xs">{spot.diseaseName}</span>
+                        <span className="ml-1 text-white text-xs">{spot.diseaseName}</span>
                       </div>
                     ))}
                   </div>
@@ -217,35 +217,35 @@ export default function Home() {
                 placeholder="Enter analysis prompt"
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                className="shadow-professional"
+                className="shadow-professional text-sm"
               />
-              <Button onClick={handleAnalyzeImage} disabled={loading} className="shadow-professional">
+              <Button onClick={handleAnalyzeImage} disabled={loading} className="shadow-professional text-sm">
                 {loading ? 'Analyzing...' : 'Analyze Image'}
               </Button>
             </CardContent>
           </Card>
 
           {analysisResult && (
-            <div className="mt-8 space-y-4">
+            <div className="mt-4 space-y-2">
               <Card className="w-full rounded-professional shadow-professional">
                 <CardHeader>
-                  <CardTitle className="drop-shadow-professional">Analysis Result</CardTitle>
-                  <CardDescription>Details of the cow analysis.</CardDescription>
+                  <CardTitle className="text-lg drop-shadow-professional">Analysis Result</CardTitle>
+                  <CardDescription className="text-sm">Details of the cow analysis.</CardDescription>
                 </CardHeader>
                 <CardContent>
                   {analysisResult.cowPresent ? (
-                    <div className="flex flex-wrap gap-4">
-                      <Card className="w-64">
+                    <div className="flex flex-wrap gap-2">
+                      <Card className="w-48">
                         <CardHeader>
-                          <CardTitle>Breed</CardTitle>
+                          <CardTitle className="text-sm">Breed</CardTitle>
                         </CardHeader>
-                        <CardContent>{analysisResult.breed}</CardContent>
+                        <CardContent className="text-sm">{analysisResult.breed}</CardContent>
                       </Card>
-                      <Card className="w-64">
+                      <Card className="w-48">
                         <CardHeader>
-                          <CardTitle>Color</CardTitle>
+                          <CardTitle className="text-sm">Color</CardTitle>
                         </CardHeader>
-                        <CardContent>{analysisResult.color}</CardContent>
+                        <CardContent className="text-sm">{analysisResult.color}</CardContent>
                       </Card>
                     </div>
                   ) : (
@@ -257,25 +257,25 @@ export default function Home() {
               {analysisResult.cowPresent && diseaseSpots.length > 0 && (
                 <Card className="w-full rounded-professional shadow-professional">
                     <CardHeader>
-                      <CardTitle className="drop-shadow-professional">Suspected Conditions and Treatments</CardTitle>
-                      <CardDescription>Detailed information about the suspected conditions and possible treatments.</CardDescription>
+                      <CardTitle className="text-lg drop-shadow-professional">Suspected Conditions and Treatments</CardTitle>
+                      <CardDescription className="text-sm">Detailed information about the suspected conditions and possible treatments.</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <Table>
                         <TableCaption>A list of suspected conditions and their recommended treatments</TableCaption>
                         <TableHeader>
                           <TableRow>
-                            <TableHead className="w-[100px]">Disease</TableHead>
-                            <TableHead>Treatment</TableHead>
-                            <TableHead>Link</TableHead>
+                            <TableHead className="w-[100px] text-xs">Disease</TableHead>
+                            <TableHead className="text-xs">Treatment</TableHead>
+                            <TableHead className="text-xs">Link</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
                           {diseaseSpots.map((spot, index) => (
                             <TableRow key={index}>
-                              <TableCell className="font-medium">{spot.diseaseName}</TableCell>
-                              <TableCell>{spot.medicineName}</TableCell>
-                              <TableCell><a href={spot.medicineLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                              <TableCell className="font-medium text-xs">{spot.diseaseName}</TableCell>
+                              <TableCell className="text-xs">{spot.medicineName}</TableCell>
+                              <TableCell className="text-xs"><a href={spot.medicineLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
                                 Treatment Information
                               </a></TableCell>
                             </TableRow>
@@ -287,23 +287,23 @@ export default function Home() {
               )}
 
               {analysisResult.cowPresent && analysisResult.health !== "No visible disease signs" && (
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
                   <Card className="w-full rounded-professional shadow-professional">
                     <CardHeader>
-                      <CardTitle className="drop-shadow-professional">Suspected Conditions</CardTitle>
-                      <CardDescription>Detailed information about the suspected conditions.</CardDescription>
+                      <CardTitle className="text-lg drop-shadow-professional">Suspected Conditions</CardTitle>
+                      <CardDescription className="text-sm">Detailed information about the suspected conditions.</CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="text-sm">
                       <p>{analysisResult.health}</p>
                     </CardContent>
                   </Card>
 
                   <Card className="w-full rounded-professional shadow-professional">
                     <CardHeader>
-                      <CardTitle className="drop-shadow-professional">Precautions and Recommendations</CardTitle>
-                      <CardDescription>Steps to take for the cow's health.</CardDescription>
+                      <CardTitle className="text-lg drop-shadow-professional">Precautions and Recommendations</CardTitle>
+                      <CardDescription className="text-sm">Steps to take for the cow's health.</CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="text-sm">
                       <ul>
                         <li>Consult with a veterinarian for further diagnosis and treatment.</li>
                         <li>Ensure the cow is isolated from other healthy cows to prevent potential spread of any infectious conditions.</li>
