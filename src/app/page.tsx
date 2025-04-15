@@ -94,23 +94,48 @@ export default function Home() {
           </Card>
 
           {analysisResult && (
-            <Card className="w-full mt-8">
-              <CardHeader>
-                <CardTitle>Analysis Result</CardTitle>
-                <CardDescription>Details of the cow analysis.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {analysisResult.cowPresent ? (
-                  <div className="space-y-2">
-                    <p><strong>Breed:</strong> {analysisResult.breed}</p>
-                    <p><strong>Color:</strong> {analysisResult.color}</p>
-                    <p><strong>Health:</strong> {analysisResult.health}</p>
-                  </div>
-                ) : (
-                  <p>No cow detected in the image.</p>
-                )}
-              </CardContent>
-            </Card>
+            <div className="mt-8 space-y-4">
+              <Card className="w-full">
+                <CardHeader>
+                  <CardTitle>Analysis Result</CardTitle>
+                  <CardDescription>Details of the cow analysis.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {analysisResult.cowPresent ? (
+                    <div className="space-y-2">
+                      <p><strong>Breed:</strong> {analysisResult.breed}</p>
+                      <p><strong>Color:</strong> {analysisResult.color}</p>
+                    </div>
+                  ) : (
+                    <p>No cow detected in the image.</p>
+                  )}
+                </CardContent>
+              </Card>
+
+              {analysisResult.cowPresent && analysisResult.health !== "No visible disease signs" && (
+                <>
+                  <Card className="w-full">
+                    <CardHeader>
+                      <CardTitle>Suspected Conditions</CardTitle>
+                      <CardDescription>Detailed information about the suspected conditions.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p>{analysisResult.health}</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="w-full">
+                    <CardHeader>
+                      <CardTitle>Precautions and Recommendations</CardTitle>
+                      <CardDescription>Steps to take for the cow's health.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p>Consult with a veterinarian for further diagnosis and treatment. Ensure the cow is isolated from other healthy cows to prevent potential spread of any infectious conditions. Maintain a clean and hygienic environment.</p>
+                    </CardContent>
+                  </Card>
+                </>
+              )}
+            </div>
           )}
           <Toaster />
         </div>
