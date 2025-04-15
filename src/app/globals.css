@@ -42,10 +42,10 @@ body {
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    --cowhealth-primary: 0 0% 100%; /* White or light gray */
-    --cowhealth-secondary: 210 20% 90%; /* Muted green or blue */
-    --cowhealth-accent: 48 100% 50%; /* Warm yellow (#FFC107) */
-    --cowhealth-text: 0 0% 3.9%;
+    --cowhealth-primary: 25 30% 95%; /* A very light tan/beige */
+    --cowhealth-secondary: 30 20% 85%; /* A slightly darker tan/beige */
+    --cowhealth-accent: 39 70% 60%; /* A muted brown */
+    --cowhealth-text: 30 10% 20%; /* Dark brown for text */
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -91,4 +91,3 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
