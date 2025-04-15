@@ -5,10 +5,11 @@ import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {Input} from '@/components/ui/input';
 import {Textarea} from '@/components/ui/textarea';
-import {useState} from 'react';
+import {useState, useRef, useEffect} from 'react';
 import {initialAnalysis} from '@/ai/flows/initial-analysis-from-prompt';
 import {useToast} from '@/hooks/use-toast';
 import {Toaster} from "@/components/ui/toaster";
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
 
 export default function Home() {
   const [imageUrl, setImageUrl] = useState('');
@@ -16,6 +17,31 @@ export default function Home() {
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const {toast} = useToast();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [hasCameraPermission, setHasCameraPermission] = useState(false);
+
+  useEffect(() => {
+    const getCameraPermission = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({video: true});
+        setHasCameraPermission(true);
+
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
+      } catch (error) {
+        console.error('Error accessing camera:', error);
+        setHasCameraPermission(false);
+        toast({
+          variant: 'destructive',
+          title: 'Camera Access Denied',
+          description: 'Please enable camera permissions in your browser settings to use this app.',
+        });
+      }
+    };
+
+    getCameraPermission();
+  }, []);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -29,10 +55,10 @@ export default function Home() {
   };
 
   const handleAnalyzeImage = async () => {
-    if (!imageUrl) {
+    if (!imageUrl && !hasCameraPermission) {
       toast({
         title: 'Error',
-        description: 'Please upload an image first.',
+        description: 'Please upload an image or enable camera access first.',
         variant: 'destructive',
       });
       return;
@@ -40,7 +66,18 @@ export default function Home() {
 
     setLoading(true);
     try {
-      const result = await initialAnalysis({imageUrl, prompt});
+      let imageToAnalyze = imageUrl;
+      if (hasCameraPermission && videoRef.current) {
+        // Capture a frame from the live camera feed as a data URL
+        const canvas = document.createElement('canvas');
+        canvas.width = videoRef.current.videoWidth;
+        canvas.height = videoRef.current.videoHeight;
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+        imageToAnalyze = canvas.toDataURL('image/jpeg'); // Convert to JPEG data URL
+      }
+
+      const result = await initialAnalysis({imageUrl: imageToAnalyze, prompt});
       setAnalysisResult(result);
       console.log(result);
     } catch (error: any) {
@@ -63,7 +100,7 @@ export default function Home() {
           <Card className="w-full">
             <CardHeader>
               <CardTitle>Image Analysis</CardTitle>
-              <CardDescription>Upload an image of a cow to analyze its health.</CardDescription>
+              <CardDescription>Upload an image of a cow or use live camera to analyze its health.</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col space-y-4">
               <Input
@@ -72,6 +109,19 @@ export default function Home() {
                 onChange={handleImageUpload}
                 className="mb-2"
               />
+
+              <video ref={videoRef} className="w-full aspect-video rounded-md" autoPlay muted />
+
+              { !(hasCameraPermission) && (
+                <Alert variant="destructive">
+                  <AlertTitle>Camera Access Required</AlertTitle>
+                  <AlertDescription>
+                    Please allow camera access to use this feature.
+                  </AlertDescription>
+                </Alert>
+              )
+              }
+
               {imageUrl && (
                 <div className="relative w-full h-64 mb-4 rounded-md overflow-hidden">
                   <Image
