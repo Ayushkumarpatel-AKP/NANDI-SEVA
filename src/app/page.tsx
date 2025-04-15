@@ -17,11 +17,12 @@ export default function Home() {
   const [prompt, setPrompt] = useState('Analyze the cow for skin diseases.');
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [scanning, setScanning] = useState(false);
   const {toast} = useToast();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [isCapturing, setIsCapturing] = useState(false);
-  const [scanning, setScanning] = useState(false);
+  const [diseaseSpots, setDiseaseSpots] = useState<any[]>([]);
 
   useEffect(() => {
     const getCameraPermission = async () => {
@@ -100,6 +101,15 @@ export default function Home() {
 
         const result = await initialAnalysis({imageUrl: imageToAnalyze, prompt});
         setAnalysisResult(result);
+
+        // Simulate identifying disease spots (replace with actual ML model output)
+        const simulatedDiseaseSpots = [
+          { x: 30, y: 25, diseaseName: "Ringworm" },
+          { x: 55, y: 60, diseaseName: "Lice Infestation" },
+          { x: 70, y: 40, diseaseName: "Skin Lesion" },
+        ];
+        setDiseaseSpots(simulatedDiseaseSpots);
+
         console.log(result);
       } catch (error: any) {
         toast({
@@ -169,6 +179,21 @@ export default function Home() {
                       <Loader2 className="animate-spin text-white h-12 w-12" />
                     </div>
                   )}
+                  {diseaseSpots.map((spot, index) => (
+                    <div
+                      key={index}
+                      className="absolute rounded-full bg-red-500 bg-opacity-75"
+                      style={{
+                        top: `${spot.y}%`,
+                        left: `${spot.x}%`,
+                        width: '10px',
+                        height: '10px',
+                        transform: 'translate(-50%, -50%)',
+                      }}
+                    >
+                      <span className="absolute top-full left-1/2 transform -translate-x-1/2 text-white text-xs">{spot.diseaseName}</span>
+                    </div>
+                  ))}
                 </div>
               )}
               <Textarea
@@ -224,32 +249,6 @@ export default function Home() {
                     </CardContent>
                   </Card>
                 </>
-              )}
-              {/* Display disease spots if available */}
-              {analysisResult.diseaseSpots && analysisResult.diseaseSpots.length > 0 && (
-                <div className="relative w-full h-64 mb-4 rounded-md overflow-hidden">
-                  <Image
-                    src={imageUrl}
-                    alt="Uploaded Cow with Disease Spots"
-                    layout="fill"
-                    objectFit="contain"
-                  />
-                  {analysisResult.diseaseSpots.map((spot, index) => (
-                    <div
-                      key={index}
-                      className="absolute rounded-full bg-red-500 bg-opacity-75"
-                      style={{
-                        top: `${spot.y}%`,
-                        left: `${spot.x}%`,
-                        width: '10px',
-                        height: '10px',
-                        transform: 'translate(-50%, -50%)',
-                      }}
-                    >
-                      <span className="absolute top-full left-1/2 transform -translate-x-1/2 text-white text-xs">{spot.diseaseName}</span>
-                    </div>
-                  ))}
-                </div>
               )}
             </div>
           )}
