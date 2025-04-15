@@ -217,9 +217,19 @@ export default function Home() {
                 </CardHeader>
                 <CardContent>
                   {analysisResult.cowPresent ? (
-                    <div className="space-y-2">
-                      <p><strong>Breed:</strong> {analysisResult.breed}</p>
-                      <p><strong>Color:</strong> {analysisResult.color}</p>
+                    <div className="flex flex-wrap gap-4">
+                      <Card className="w-64">
+                        <CardHeader>
+                          <CardTitle>Breed</CardTitle>
+                        </CardHeader>
+                        <CardContent>{analysisResult.breed}</CardContent>
+                      </Card>
+                      <Card className="w-64">
+                        <CardHeader>
+                          <CardTitle>Color</CardTitle>
+                        </CardHeader>
+                        <CardContent>{analysisResult.color}</CardContent>
+                      </Card>
                     </div>
                   ) : (
                     <p>No cow detected in the image.</p>
@@ -228,7 +238,7 @@ export default function Home() {
               </Card>
 
               {analysisResult.cowPresent && analysisResult.health !== "No visible disease signs" && (
-                <>
+                <div className="flex flex-col gap-4">
                   <Card className="w-full rounded-professional shadow-professional">
                     <CardHeader>
                       <CardTitle className="drop-shadow-professional">Suspected Conditions</CardTitle>
@@ -245,10 +255,14 @@ export default function Home() {
                       <CardDescription>Steps to take for the cow's health.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <p>Consult with a veterinarian for further diagnosis and treatment. Ensure the cow is isolated from other healthy cows to prevent potential spread of any infectious conditions. Maintain a clean and hygienic environment.</p>
+                      <ul>
+                        <li>Consult with a veterinarian for further diagnosis and treatment.</li>
+                        <li>Ensure the cow is isolated from other healthy cows to prevent potential spread of any infectious conditions.</li>
+                        <li>Maintain a clean and hygienic environment.</li>
+                      </ul>
                     </CardContent>
                   </Card>
-                </>
+                </div>
               )}
             </div>
           )}
