@@ -96,10 +96,10 @@ export default function Home() {
       <div className="relative py-3 sm:max-w-xl sm:mx-auto">
         <div className="absolute inset-0 bg-gradient-to-r from-cowhealth-secondary to-cowhealth-accent shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
         <div className="relative px-4 py-10 bg-cowhealth-primary shadow-lg rounded-3xl sm:p-20">
-          <h1 className="text-2xl font-bold mb-8 text-cowhealth-text text-center">CowHealth AI</h1>
-          <Card className="w-full">
+          <h1 className="text-2xl font-bold mb-8 text-cowhealth-text text-center shadow-funky">CowHealth AI</h1>
+          <Card className="w-full rounded-funky shadow-funky">
             <CardHeader>
-              <CardTitle>Image Analysis</CardTitle>
+              <CardTitle className="drop-shadow-funky">Image Analysis</CardTitle>
               <CardDescription>Upload an image of a cow or use live camera to analyze its health.</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col space-y-4">
@@ -136,8 +136,9 @@ export default function Home() {
                 placeholder="Enter analysis prompt"
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
+                className="shadow-funky"
               />
-              <Button onClick={handleAnalyzeImage} disabled={loading}>
+              <Button onClick={handleAnalyzeImage} disabled={loading} className="shadow-funky">
                 {loading ? 'Analyzing...' : 'Analyze Image'}
               </Button>
             </CardContent>
@@ -145,9 +146,9 @@ export default function Home() {
 
           {analysisResult && (
             <div className="mt-8 space-y-4">
-              <Card className="w-full">
+              <Card className="w-full rounded-funky shadow-funky">
                 <CardHeader>
-                  <CardTitle>Analysis Result</CardTitle>
+                  <CardTitle className="drop-shadow-funky">Analysis Result</CardTitle>
                   <CardDescription>Details of the cow analysis.</CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -164,9 +165,9 @@ export default function Home() {
 
               {analysisResult.cowPresent && analysisResult.health !== "No visible disease signs" && (
                 <>
-                  <Card className="w-full">
+                  <Card className="w-full rounded-funky shadow-funky">
                     <CardHeader>
-                      <CardTitle>Suspected Conditions</CardTitle>
+                      <CardTitle className="drop-shadow-funky">Suspected Conditions</CardTitle>
                       <CardDescription>Detailed information about the suspected conditions.</CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -174,9 +175,9 @@ export default function Home() {
                     </CardContent>
                   </Card>
 
-                  <Card className="w-full">
+                  <Card className="w-full rounded-funky shadow-funky">
                     <CardHeader>
-                      <CardTitle>Precautions and Recommendations</CardTitle>
+                      <CardTitle className="drop-shadow-funky">Precautions and Recommendations</CardTitle>
                       <CardDescription>Steps to take for the cow's health.</CardDescription>
                     </CardHeader>
                     <CardContent>

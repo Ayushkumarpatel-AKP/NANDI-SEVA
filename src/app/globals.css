@@ -3,127 +3,110 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Comic Sans MS', cursive; /* A playful, though controversial, choice */
 }
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --background: 214 93% 92%; /* Soft lavender */
+    --foreground: 260 41% 25%; /* Deep purple */
+    --card: 53 89% 67%; /* Vibrant coral */
+    --card-foreground: 210 20% 98%; /* Off-white */
+    --popover: 174 78% 47%; /* Turquoise */
+    --popover-foreground: 0 0% 10%; /* Very dark */
+    --primary: 354 92% 73%; /* Bright pink */
+    --primary-foreground: 0 0% 10%; /* Almost black */
+    --secondary: 171 85% 86%; /* Mint green */
+    --secondary-foreground: 262 44% 13%; /* Dark purple */
+    --muted: 49 91% 93%; /* Light peach */
+    --muted-foreground: 274 79% 56%; /* Medium magenta */
+    --accent: 23 97% 73%; /* Bright orange */
+    --accent-foreground: 210 0% 10%; /* Dark */
+    --destructive: 0 63% 51%; /* Standard red */
+    --destructive-foreground: 0 0% 98%; /* Off-white */
+    --border: 28 88% 60%; /* Coral */
+    --input: 178 74% 83%; /* Light aqua */
+    --ring: 302 91% 62%; /* Hot pink */
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --radius: 0.75rem; /* Slightly rounded */
+    --sidebar-background: 20 91% 78%; /* Salmon */
+    --sidebar-foreground: 253 41% 27%; /* Deep indigo */
+    --sidebar-primary: 45 87% 57%; /* Golden yellow */
+    --sidebar-primary-foreground: 218 49% 18%; /* Dark periwinkle */
+    --sidebar-accent: 22 81% 80%; /* Apricot */
+    --sidebar-accent-foreground: 278 67% 21%; /* Darker magenta */
+    --sidebar-border: 232 87% 72%; /* Sky blue */
+    --sidebar-ring: 322 97% 70%; /* Raspberry */
 
-    --cowhealth-primary: 25 30% 95%; /* A very light tan/beige */
-    --cowhealth-secondary: 30 20% 85%; /* A slightly darker tan/beige */
-    --cowhealth-accent: 39 70% 60%; /* A muted brown */
-    --cowhealth-text: 30 10% 20%; /* Dark brown for text */
+    /* Specific funky colors */
+    --cowhealth-primary: 45 100% 80%; /* Electric yellow */
+    --cowhealth-secondary: 308 100% 70%; /* Shocking pink */
+    --cowhealth-accent: 156 100% 60%; /* Acid green */
+    --cowhealth-text: 220 100% 20%; /* Neon blue */
   }
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --background: 270 50% 10%;
+    --foreground: 30 20% 90%;
+    --card: 120 40% 15%;
+    --card-foreground: 30 20% 90%;
+    --popover: 240 30% 20%;
+    --popover-foreground: 30 20% 90%;
+    --primary: 60 80% 50%;
+    --primary-foreground: 0 0% 10%;
+    --secondary: 300 50% 25%;
+    --secondary-foreground: 0 0% 90%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 50%;
+    --accent: 30 40% 30%;
+    --accent-foreground: 0 0% 90%;
+    --destructive: 0 70% 40%;
+    --destructive-foreground: 0 0% 90%;
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 60 80% 50%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-background: 240 10% 15%;
+    --sidebar-foreground: 0 0% 90%;
     --sidebar-primary: 224.3 76.3% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-accent: 240 5% 25%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 240 5% 20%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    --cowhealth-primary: 25 30% 95%; /* A very light tan/beige */
-    --cowhealth-secondary: 30 20% 85%; /* A slightly darker tan/beige */
-    --cowhealth-accent: 39 70% 60%; /* A muted brown */
-    --cowhealth-text: 30 10% 20%; /* Dark brown for text */
+    /* Specific funky colors for dark mode */
+    --cowhealth-primary: 60 100% 50%; /* Bright yellow */
+    --cowhealth-secondary: 300 100% 60%; /* Hot pink */
+    --cowhealth-accent: 160 100% 40%; /* Lime green */
+    --cowhealth-text: 220 100% 80%; /* Light blue */
+  }
 
-     /* Green theme for cards */
-    --card-background: 120 30% 95%; /* Light green */
-    --card-foreground: 120 10% 20%; /* Dark green text */
+  /* Shadows and gradients */
+  body {
+    @apply bg-gradient-to-br from-[hsl(var(--background))] to-[hsl(var(--secondary))] text-[hsl(var(--foreground))];
+    /* Other base styles */
   }
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+
+  .shadow-funky {
+    box-shadow: 0 4px 6px rgba(255, 0, 255, 0.3), 0 1px 3px rgba(0, 255, 255, 0.3); /* Pink and cyan shadows */
   }
+
+  .drop-shadow-funky {
+    filter: drop-shadow(8px 8px 10px hsla(38, 92%, 50%, 0.5)); /* Golden shadow */
+  }
+
+  .rounded-funky {
+    border-radius: 1.5rem; /* More rounded */
+  }
+
 }
 
 @layer base {
