@@ -11,6 +11,15 @@ import {useToast} from '@/hooks/use-toast';
 import {Toaster} from "@/components/ui/toaster";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
 import {Loader2} from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 export default function Home() {
   const [imageUrl, setImageUrl] = useState('');
@@ -104,9 +113,9 @@ export default function Home() {
 
         // Simulate identifying disease spots (replace with actual ML model output)
         const simulatedDiseaseSpots = [
-          { x: 30, y: 25, diseaseName: "Ringworm" , medicineLink: "https://www.example.com/ringworm-treatment" },
-          { x: 55, y: 60, diseaseName: "Lice Infestation" ,medicineLink: "https://www.example.com/lice-treatment" },
-          { x: 70, y: 40, diseaseName: "Skin Lesion" ,medicineLink: "https://www.example.com/skin-lesion-treatment" },
+          { x: 30, y: 25, diseaseName: "Ringworm" , medicineName: "Miconazole Cream", medicineLink: "https://www.example.com/ringworm-treatment" },
+          { x: 55, y: 60, diseaseName: "Lice Infestation" ,medicineName: "Permethrin Lotion",medicineLink: "https://www.example.com/lice-treatment" },
+          { x: 70, y: 40, diseaseName: "Skin Lesion" ,medicineName: "Silver Sulfadiazine",medicineLink: "https://www.example.com/skin-lesion-treatment" },
         ];
         setDiseaseSpots(simulatedDiseaseSpots);
 
@@ -179,9 +188,11 @@ export default function Home() {
                       <Loader2 className="animate-spin text-white h-12 w-12" />
                     </div>
                   )}
-                  {diseaseSpots.map((spot, index) => (
-                    <div key={index} className="relative">
+                  {/* Disease Spots */}
+                  <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+                    {diseaseSpots.map((spot, index) => (
                       <div
+                        key={index}
                         className="absolute rounded-full bg-red-500 bg-opacity-75"
                         style={{
                           top: `${spot.y}%`,
@@ -190,16 +201,9 @@ export default function Home() {
                           height: '10px',
                           transform: 'translate(-50%, -50%)',
                         }}
-                      >
-                        <span className="absolute top-full left-1/2 transform -translate-x-1/2 text-white text-xs">{spot.diseaseName}</span>
-                      </div>
-                      <div className="mt-2 text-center">
-                        <a href={spot.medicineLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
-                          Treatment Information
-                        </a>
-                      </div>
-                    </div>
-                  ))}
+                      />
+                    ))}
+                  </div>
                 </div>
               )}
               <Textarea
@@ -242,6 +246,38 @@ export default function Home() {
                   )}
                 </CardContent>
               </Card>
+
+              {analysisResult.cowPresent && diseaseSpots.length > 0 && (
+                <Card className="w-full rounded-professional shadow-professional">
+                    <CardHeader>
+                      <CardTitle className="drop-shadow-professional">Suspected Conditions and Treatments</CardTitle>
+                      <CardDescription>Detailed information about the suspected conditions and possible treatments.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <Table>
+                        <TableCaption>A list of suspected conditions and their recommended treatments</TableCaption>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead className="w-[100px]">Disease</TableHead>
+                            <TableHead>Treatment</TableHead>
+                            <TableHead>Link</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {diseaseSpots.map((spot, index) => (
+                            <TableRow key={index}>
+                              <TableCell className="font-medium">{spot.diseaseName}</TableCell>
+                              <TableCell>{spot.medicineName}</TableCell>
+                              <TableCell><a href={spot.medicineLink} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                                Treatment Information
+                              </a></TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </CardContent>
+                  </Card>
+              )}
 
               {analysisResult.cowPresent && analysisResult.health !== "No visible disease signs" && (
                 <div className="flex flex-col gap-4">
