@@ -21,6 +21,7 @@ export default function Home() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [isCapturing, setIsCapturing] = useState(false);
+  const [scanning, setScanning] = useState(false);
 
   useEffect(() => {
     const getCameraPermission = async () => {
@@ -83,30 +84,34 @@ export default function Home() {
     }
 
     setLoading(true);
-    try {
-      let imageToAnalyze = imageUrl;
-      if (hasCameraPermission && videoRef.current && !imageUrl) {
-        // Capture a frame from the live camera feed as a data URL
-        const canvas = document.createElement('canvas');
-        canvas.width = videoRef.current.videoWidth;
-        canvas.height = videoRef.current.videoHeight;
-        const ctx = canvas.getContext('2d');
-        ctx?.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-        imageToAnalyze = canvas.toDataURL('image/jpeg'); // Convert to JPEG data URL
-      }
+    setScanning(true);
+    setTimeout(async () => {
+      try {
+        let imageToAnalyze = imageUrl;
+        if (hasCameraPermission && videoRef.current && !imageUrl) {
+          // Capture a frame from the live camera feed as a data URL
+          const canvas = document.createElement('canvas');
+          canvas.width = videoRef.current.videoWidth;
+          canvas.height = videoRef.current.videoHeight;
+          const ctx = canvas.getContext('2d');
+          ctx?.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+          imageToAnalyze = canvas.toDataURL('image/jpeg'); // Convert to JPEG data URL
+        }
 
-      const result = await initialAnalysis({imageUrl: imageToAnalyze, prompt});
-      setAnalysisResult(result);
-      console.log(result);
-    } catch (error: any) {
-      toast({
-        title: 'Analysis Failed',
-        description: error.message || 'Failed to analyze the image. Please try again.',
-        variant: 'destructive',
-      });
-    } finally {
-      setLoading(false);
-    }
+        const result = await initialAnalysis({imageUrl: imageToAnalyze, prompt});
+        setAnalysisResult(result);
+        console.log(result);
+      } catch (error: any) {
+        toast({
+          title: 'Analysis Failed',
+          description: error.message || 'Failed to analyze the image. Please try again.',
+          variant: 'destructive',
+        });
+      } finally {
+        setLoading(false);
+        setScanning(false);
+      }
+    }, 2000); // Simulate scanning for 2 seconds
   };
 
   return (
@@ -157,7 +162,13 @@ export default function Home() {
                     alt="Uploaded Cow"
                     layout="fill"
                     objectFit="contain"
+                    className={scanning ? 'animate-pulse' : ''} // Apply pulse animation during scanning
                   />
+                  {scanning && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-md">
+                      <Loader2 className="animate-spin text-white h-12 w-12" />
+                    </div>
+                  )}
                 </div>
               )}
               <Textarea
@@ -213,6 +224,32 @@ export default function Home() {
                     </CardContent>
                   </Card>
                 </>
+              )}
+              {/* Display disease spots if available */}
+              {analysisResult.diseaseSpots && analysisResult.diseaseSpots.length > 0 && (
+                <div className="relative w-full h-64 mb-4 rounded-md overflow-hidden">
+                  <Image
+                    src={imageUrl}
+                    alt="Uploaded Cow with Disease Spots"
+                    layout="fill"
+                    objectFit="contain"
+                  />
+                  {analysisResult.diseaseSpots.map((spot, index) => (
+                    <div
+                      key={index}
+                      className="absolute rounded-full bg-red-500 bg-opacity-75"
+                      style={{
+                        top: `${spot.y}%`,
+                        left: `${spot.x}%`,
+                        width: '10px',
+                        height: '10px',
+                        transform: 'translate(-50%, -50%)',
+                      }}
+                    >
+                      <span className="absolute top-full left-1/2 transform -translate-x-1/2 text-white text-xs">{spot.diseaseName}</span>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
           )}
