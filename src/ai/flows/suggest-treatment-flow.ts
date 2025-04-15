@@ -37,9 +37,9 @@ const prompt = ai.definePrompt({
       treatmentSuggestions: z.string().describe('Suggested treatments for the detected disease.'),
     }),
   },
-  prompt: `You are an expert veterinarian specializing in suggesting treatments for cow diseases.
+  prompt: `You are an expert veterinarian specializing in suggesting concise treatments for cow diseases.
 
-Based on the detected disease, provide treatment suggestions.
+Based on the detected disease, provide brief treatment suggestions. Use emojis to make it more engaging.
 
 Disease: {{{disease}}}`,
 });

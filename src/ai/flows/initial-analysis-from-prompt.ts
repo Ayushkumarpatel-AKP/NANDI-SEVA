@@ -71,7 +71,8 @@ async input => {
   if (output && output.cowPresent && output.health !== "No visible disease signs") {
     try {
       const treatmentResult: SuggestTreatmentOutput = await suggestTreatment({ disease: output.health });
-      output.treatmentSuggestions = treatmentResult.treatmentSuggestions;
+      // Shorten treatment suggestions to a reasonable length and add emojis
+      output.treatmentSuggestions = treatmentResult.treatmentSuggestions.substring(0, 200) + "... 🐄💊🔗";
 
       // Generate conditions and treatments using the new flow
       const conditionsAndTreatments: GenerateConditionsAndTreatmentsOutput = await generateConditionsAndTreatments({ disease: output.health });
@@ -79,7 +80,7 @@ async input => {
 
     } catch (error) {
       console.error("Error suggesting treatment:", error);
-      output.treatmentSuggestions = "Failed to retrieve treatment suggestions.";
+      output.treatmentSuggestions = "Failed to retrieve treatment suggestions. Please consult a veterinarian. 👩‍⚕️";
       output.diseaseDetails = [];
     }
   } else {
