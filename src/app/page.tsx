@@ -170,6 +170,9 @@ export default function Home() {
       <div className="relative py-1 sm:max-w-xl sm:mx-auto">
         <div className="absolute inset-0 bg-gradient-to-r from-green-300 to-green-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
         <div className="relative px-2 py-5 bg-green-100 shadow-lg rounded-3xl sm:p-10">
+          <Button asChild className="absolute top-2 right-2 shadow-professional text-sm">
+            <a href="http://localhost:8080/n7/home.jsp">Go to Home</a>
+          </Button>
           <h1 className="text-xl font-bold mb-4 text-gray-900 text-center shadow-professional">CowHealth AI 🐄</h1>
           <Card className="w-full rounded-professional shadow-professional">
             <CardHeader>
