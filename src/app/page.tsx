@@ -327,7 +327,7 @@ export default function Home() {
                           </TableRow>
                         </TableHeader>
                         <TableBody>
-                          {analysisResult.diseaseDetails.map((spot, index) => (
+                          {analysisResult.diseaseDetails.map((spot: { diseaseName: string; medicineName: string; medicineLink: string }, index: number) => (
                             <TableRow key={index}>
                               <TableCell className="font-medium text-xs">{spot.diseaseName}</TableCell>
                               <TableCell className="text-xs">{spot.medicineName}</TableCell>
